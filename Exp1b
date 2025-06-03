@@ -1,0 +1,62 @@
+Experiment 1 b....
+
+#include <stdio.h>
+
+int i, visit[20], n, adj[20][20], topo_order[20];
+
+void dfs(int v) {
+    int w;
+    visit[v] = 1;
+    for (w = 1; w <= n; w++) {
+        if (adj[v][w] == 1 && visit[w] == 0)
+            dfs(w);
+    }
+    topo_order[i--] = v;  // Store in reverse finishing time
+}
+
+void main() {
+    int v, w;
+
+    printf("Enter the number of vertices:\n");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix:\n");
+    for (v = 1; v <= n; v++) {
+        for (w = 1; w <= n; w++) {
+            scanf("%d", &adj[v][w]);
+        }
+    }
+
+    // Initialize visited array
+    for (v = 1; v <= n; v++)
+        visit[v] = 0;
+
+    i = n;  // Initialize index for topological order
+
+    // Call DFS for all unvisited nodes
+    for (v = 1; v <= n; v++) {
+        if (visit[v] == 0)
+            dfs(v);
+    }
+
+    printf("\nTopological sorting is:\n");
+    for (v = 1; v <= n; v++) {
+        printf("v%d ", topo_order[v]);
+    }
+    printf("\n");
+}
+
+Sample input:
+
+Enter the number of vertices:
+4
+Enter the adjacency matrix:
+0 1 0 0
+0 0 1 0
+0 0 0 1
+0 0 0 0
+
+Output:
+
+Topological sorting is:
+v1 v2 v3 v4
