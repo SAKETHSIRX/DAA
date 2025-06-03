@@ -1,0 +1,110 @@
+Experiment 9.....
+
+
+#include <stdio.h>
+
+int a[10][10], visited[10], n, cost = 0;
+
+// Function to get cost matrix and initialize
+void get() {
+    int i, j;
+
+    printf("Enter number of cities: ");
+    scanf("%d", &n);
+
+    printf("\nEnter Cost Matrix:\n");
+    for (i = 0; i < n; i++) {
+        printf("Enter elements of row #%d:\n", i + 1);
+        for (j = 0; j < n; j++) {
+            scanf("%d", &a[i][j]);
+        }
+        visited[i] = 0;
+    }
+
+    printf("\nThe Cost Matrix is:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%4d", a[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Function to find the minimum cost path from current city
+int least(int c) {
+    int i, nc = 999;
+    int min = 999, kmin;
+
+    for (i = 0; i < n; i++) {
+        if ((a[c][i] != 0) && (visited[i] == 0)) {
+            if (a[c][i] + a[i][0] < min) {
+                min = a[c][i] + a[i][0];
+                kmin = a[c][i];
+                nc = i;
+            }
+        }
+    }
+
+    if (min != 999)
+        cost += kmin;
+
+    return nc;
+}
+
+// Recursive function to compute path and cost
+void mincost(int city) {
+    int ncity;
+
+    visited[city] = 1;
+    printf("%d --> ", city + 1);
+
+    ncity = least(city);
+
+    if (ncity == 999) {
+        ncity = 0;
+        printf("%d", ncity + 1);
+        cost += a[city][ncity];
+        return;
+    }
+
+    mincost(ncity);
+}
+
+// Function to print final cost
+void put() {
+    printf("\n\nMinimum Cost: %d\n", cost);
+}
+
+// Main function
+int main() {
+    get();
+    printf("\nThe Path is:\n\n");
+    mincost(0);
+    put();
+    return 0;
+}
+
+Sample input:
+
+Enter number of cities: 4
+
+Enter Cost Matrix:
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0
+
+
+Output:
+
+The Cost Matrix is:
+   0  10  15  20
+  10   0  35  25
+  15  35   0  30
+  20  25  30   0
+
+The Path is:
+
+1 --> 2 --> 4 --> 3 --> 1
+
+Minimum Cost: 80
