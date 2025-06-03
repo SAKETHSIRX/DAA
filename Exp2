@@ -1,0 +1,81 @@
+Experiment 2...
+
+#include <stdio.h>
+
+// Function declarations
+void quicksort(int[], int, int);
+int partition(int[], int, int);
+
+void main() {
+    int i, n, a[20], ch = 1;
+
+    while (ch) {
+        printf("\nEnter the number of elements: ");
+        scanf("%d", &n);
+
+        printf("Enter the array elements:\n");
+        for (i = 0; i < n; i++)
+            scanf("%d", &a[i]);
+
+        quicksort(a, 0, n - 1);
+
+        printf("\nThe sorted array elements are:\n");
+        for (i = 0; i < n; i++)
+            printf("%d ", a[i]);
+
+        printf("\n\nDo you wish to continue? (1 = Yes, 0 = No): ");
+        scanf("%d", &ch);
+    }
+}
+
+// Quick Sort Function
+void quicksort(int a[], int low, int high) {
+    int mid;
+    if (low < high) {
+        mid = partition(a, low, high);
+        quicksort(a, low, mid - 1);
+        quicksort(a, mid + 1, high);
+    }
+}
+
+// Partition Function
+int partition(int a[], int low, int high) {
+    int key = a[low];
+    int i = low + 1;
+    int j = high;
+    int temp;
+
+    while (i <= j) {
+        while (i <= high && a[i] <= key)
+            i++;
+
+        while (a[j] > key)
+            j--;
+
+        if (i < j) {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+
+    // Swap key with a[j]
+    temp = a[low];
+    a[low] = a[j];
+    a[j] = temp;
+
+    return j;
+}
+
+Sample input :
+
+
+Enter the number of elements: 5
+Enter the array elements:
+9 3 5 1 7
+
+
+Output:
+
+The sorted array elements are:
+1 3 5 7 9
